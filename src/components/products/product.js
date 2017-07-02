@@ -16,7 +16,7 @@ class Product extends Component {
                 <div className="clearfix">
                     <div className="price pull-left">${this.props.product.price}</div>
                 </div>
-                <button onClick={this.props.onClickFunction}>Buy Now!</button>
+                <button className="btn btn-default" onClick={this.props.onClickFunction}><i className="glyphicon glyphicon-shopping-cart"></i></button>
             </div>
           </div>
         </div>

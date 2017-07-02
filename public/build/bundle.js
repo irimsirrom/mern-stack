@@ -23172,6 +23172,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// import Filter from './products/filter'
+
 var Products = function (_Component) {
   _inherits(Products, _Component);
 
@@ -23182,12 +23184,14 @@ var Products = function (_Component) {
 
     _this.state = {
       products: [],
-      cartTotal: 0
+      cartTotal: 0,
+      activeList: []
+      // filterType: 'Meat'
     };
-    _this.addToCart = function () {
+    _this.addToCart = function (product) {
       _this.setState(function (prevState) {
         return {
-          cartTotal: prevState.cartTotal + 1
+          cartTotal: prevState.cartTotal + product.price
         };
       });
     };
@@ -23204,6 +23208,7 @@ var Products = function (_Component) {
           return obj;
         });
         _this2.setState({
+
           products: products
         });
       });
@@ -23214,7 +23219,9 @@ var Products = function (_Component) {
       var _this3 = this;
 
       var listItems = this.state.products.map(function (product, i) {
-        return _react2.default.createElement(_product2.default, { onClickFunction: _this3.addToCart, product: product });
+        return _react2.default.createElement(_product2.default, { onClickFunction: function onClickFunction() {
+            return _this3.addToCart(product);
+          }, product: product, key: product._id });
       });
       return _react2.default.createElement(
         'div',
@@ -24176,8 +24183,8 @@ var Product = function (_Component) {
             ),
             _react2.default.createElement(
               'button',
-              { onClick: this.props.onClickFunction },
-              'Buy Now!'
+              { className: 'btn btn-default', onClick: this.props.onClickFunction },
+              _react2.default.createElement('i', { className: 'glyphicon glyphicon-shopping-cart' })
             )
           )
         )
