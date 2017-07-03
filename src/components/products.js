@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import Product from './products/product'
 import Cart from './products/cart'
-// import Filter from './products/filter'
+import Filter from './products/filter'
 
 class Products extends Component {
 
@@ -12,11 +12,23 @@ class Products extends Component {
         products: [],
         cartTotal:0,
         activeList: [],
-        // filterType: 'Meat'
+        filters: ['Meat', 'Dairy', 'Vegan'],
+        selectedFilter: 'Meat'
     }
     this.addToCart = (product) => {
       this.setState((prevState) =>({
           cartTotal: prevState.cartTotal + product.price
+      }));
+    };
+    this.filterProducts = () =>{
+      const filteredList = [];
+      for (var i=0;i < this.state.products.length; i++){
+        if(this.state.products[i].category === this.state.selectedFilter){
+          filteredList.push(this.state.products[i]);
+        }
+      }
+      this.setState(() => ({
+        products: filteredList
       }));
     };
   }
@@ -39,11 +51,11 @@ class Products extends Component {
       )
     })
     return (
-      <div>
-        {/* <Filter onClickFunction={() =>this.filterProducts(filterType)} filterType={filterType}/> */}
-        {listItems}
-        <Cart cartTotal={this.state.cartTotal} />
-        </div>
+      <div className="content">
+          <Filter onClickFunction={() =>this.filterProducts()} filters={this.state.filters}/>
+          {listItems}
+          <Cart cartTotal={this.state.cartTotal} />
+      </div>
     )
   }
 }

@@ -2,9 +2,15 @@ import React, { Component } from 'react'
 
 class Filter extends Component {
   render() {
+    const filterList = this.props.filters.map((filter, i) => {
+      return (
+        <button className="btn btn-default" onClick={this.props.onClickFunction}>{filter}</button>
+      )
+    })
     return (
-
-      <button onClickFunction={this.props.onClickFunction}>{this.prop.filterType}</button>
+        <div className="col-md-12 btn-group">
+          {filterList}
+        </div>
     )
   }
 }
