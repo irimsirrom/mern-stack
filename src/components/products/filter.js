@@ -4,7 +4,7 @@ class Filter extends Component {
   render() {
     const filterList = this.props.filters.map((filter, i) => {
       return (
-        <button className="btn btn-default" onClick={this.props.onClickFunction}>{filter}</button>
+        <input className="btn btn-default" type="button" value={filter} onClick={this.props.onClickFunction}/>
       )
     })
     return (

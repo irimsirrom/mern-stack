@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import Product from './products/product'
 import Cart from './products/cart'
-import Filter from './products/filter'
+// import Filter from './products/filter'
 
 class Products extends Component {
 
@@ -13,17 +13,17 @@ class Products extends Component {
         cartTotal:0,
         activeList: [],
         filters: ['Meat', 'Dairy', 'Vegan'],
-        selectedFilter: 'Meat'
+        // selectedFilter: ''
     }
     this.addToCart = (product) => {
       this.setState((prevState) =>({
           cartTotal: prevState.cartTotal + product.price
       }));
     };
-    this.filterProducts = () =>{
+    this.filterProducts = (filter) =>{
       const filteredList = [];
       for (var i=0;i < this.state.products.length; i++){
-        if(this.state.products[i].category === this.state.selectedFilter){
+        if(this.state.products[i].category === filter){
           filteredList.push(this.state.products[i]);
         }
       }
@@ -50,9 +50,17 @@ class Products extends Component {
         <Product onClickFunction={() =>this.addToCart(product)} product={product} key={product._id}/>
       )
     })
+    const filterList = this.state.filters.map((filter, i) => {
+      return (
+        <input className="btn btn-default" type="button" value={filter} onClick={() =>this.filterProducts(filter)}/>
+      )
+    })
     return (
       <div className="content">
-          <Filter onClickFunction={() =>this.filterProducts()} filters={this.state.filters}/>
+          <div className="col-md-12 btn-group">
+            {filterList}
+          </div>
+          {/* <Filter onClickFunction={() =>this.filterProducts(filter)} filters={this.state.filters}/> */}
           {listItems}
           <Cart cartTotal={this.state.cartTotal} />
       </div>
