@@ -23186,13 +23186,18 @@ var Products = function (_Component) {
       products: [],
       cartTotal: 0,
       activeList: [],
-      filters: ['Meat', 'Dairy', 'Vegan']
+      filters: ['Meat', 'Dairy', 'Vegan'],
+      filteredList: [],
+      menu: []
       // selectedFilter: ''
     };
     _this.addToCart = function (product) {
+      var selectedMenu = _this.state.menu;
+      selectedMenu.push(product);
       _this.setState(function (prevState) {
         return {
-          cartTotal: prevState.cartTotal + product.price
+          cartTotal: prevState.cartTotal + product.price,
+          menu: selectedMenu
         };
       });
     };
@@ -23205,7 +23210,7 @@ var Products = function (_Component) {
       }
       _this.setState(function () {
         return {
-          products: filteredList
+          filteredList: filteredList
         };
       });
     };
@@ -23222,7 +23227,6 @@ var Products = function (_Component) {
           return obj;
         });
         _this2.setState({
-
           products: products
         });
       });
@@ -23232,7 +23236,7 @@ var Products = function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      var listItems = this.state.products.map(function (product, i) {
+      var listItems = this.state.filteredList.map(function (product, i) {
         return _react2.default.createElement(_product2.default, { onClickFunction: function onClickFunction() {
             return _this3.addToCart(product);
           }, product: product, key: product._id });
@@ -23242,6 +23246,13 @@ var Products = function (_Component) {
             return _this3.filterProducts(filter);
           } });
       });
+      var menuList = this.state.menu.map(function (menuItem, i) {
+        return _react2.default.createElement(
+          'li',
+          null,
+          menuItem.product_name
+        );
+      });
       return _react2.default.createElement(
         'div',
         { className: 'content' },
@@ -23249,6 +23260,11 @@ var Products = function (_Component) {
           'div',
           { className: 'col-md-12 btn-group' },
           filterList
+        ),
+        _react2.default.createElement(
+          'ul',
+          null,
+          menuList
         ),
         listItems,
         _react2.default.createElement(_cart2.default, { cartTotal: this.state.cartTotal })

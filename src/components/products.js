@@ -13,11 +13,16 @@ class Products extends Component {
         cartTotal:0,
         activeList: [],
         filters: ['Meat', 'Dairy', 'Vegan'],
+        filteredList:[],
+        menu:[]
         // selectedFilter: ''
     }
     this.addToCart = (product) => {
+      const selectedMenu = this.state.menu;
+      selectedMenu.push(product);
       this.setState((prevState) =>({
-          cartTotal: prevState.cartTotal + product.price
+          cartTotal: prevState.cartTotal + product.price,
+          menu:selectedMenu
       }));
     };
     this.filterProducts = (filter) =>{
@@ -28,7 +33,7 @@ class Products extends Component {
         }
       }
       this.setState(() => ({
-        products: filteredList
+        filteredList: filteredList
       }));
     };
   }
@@ -38,14 +43,13 @@ class Products extends Component {
         .then(res => {
           const products = res.data.map(obj => obj);
           this.setState({
-
             products
            });
         });
     }
 
   render() {
-    const listItems = this.state.products.map((product, i) => {
+    const listItems = this.state.filteredList.map((product, i) => {
       return (
         <Product onClickFunction={() =>this.addToCart(product)} product={product} key={product._id}/>
       )
@@ -55,11 +59,17 @@ class Products extends Component {
         <input className="btn btn-default" type="button" value={filter} onClick={() =>this.filterProducts(filter)}/>
       )
     })
+    const menuList = this.state.menu.map((menuItem, i) =>{
+      return (
+        <li>{menuItem.product_name}</li>
+      )
+    })
     return (
       <div className="content">
           <div className="col-md-12 btn-group">
             {filterList}
           </div>
+          <ul>{menuList}</ul>
           {/* <Filter onClickFunction={() =>this.filterProducts(filter)} filters={this.state.filters}/> */}
           {listItems}
           <Cart cartTotal={this.state.cartTotal} />
