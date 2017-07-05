@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import Product from './products/product'
 import Cart from './products/cart'
-// import Filter from './products/filter'
+import Filter from './products/filter'
 
 class Products extends Component {
 
@@ -56,7 +56,7 @@ class Products extends Component {
     })
     const filterList = this.state.filters.map((filter, i) => {
       return (
-        <input className="btn btn-default" type="button" value={filter} onClick={() =>this.filterProducts(filter)}/>
+        <Filter onClickFunction={() =>this.filterProducts(filter)} filter={filter} key={filter}/>
       )
     })
     const menuList = this.state.menu.map((menuItem, i) =>{

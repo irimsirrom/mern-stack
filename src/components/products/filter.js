@@ -2,18 +2,13 @@ import React, { Component } from 'react'
 
 class Filter extends Component {
   render() {
-    const filterList = this.props.filters.map((filter, i) => {
-      return (
-        <input className="btn btn-default" type="button" value={filter} onClick={this.props.onClickFunction}/>
-      )
-    })
+
     return (
-        <div className="col-md-12 btn-group">
-          {filterList}
-        </div>
+        <input className="btn btn-default" type="button" value={this.props.filter} onClick={this.props.onClickFunction}/>
     )
   }
 }
 
 
 export default Filter
+ // onClick={() =>this.filterProducts(filter)}
